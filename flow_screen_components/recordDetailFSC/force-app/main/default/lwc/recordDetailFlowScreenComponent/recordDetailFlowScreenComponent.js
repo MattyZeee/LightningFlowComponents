@@ -3,6 +3,7 @@ import {getRecord} from 'lightning/uiRecordApi';
 import {getObjectInfo} from 'lightning/uiObjectInfoApi';
 import NotSupportedMessage from '@salesforce/label/c.NotSupportedMessage';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent} from 'lightning/flowSupport';
+import doBeforeSave from '@salesforce/apex/RecordDetailFSCHelper.doBeforeSave';
 
 export default class recordDetailFSC extends LightningElement {
     @api recordId;
@@ -21,6 +22,7 @@ export default class recordDetailFSC extends LightningElement {
     @api columnsize = 2;
     @api suppressUnderline = false;
     @api boxclass='slds-box slds-theme_default';
+    @api customApexClassName;
 
     @track elementSize = 6;
     @track objectData;
@@ -130,10 +132,26 @@ export default class recordDetailFSC extends LightningElement {
     handleSubmit(event){
         event.preventDefault();
         const fields = event.detail.fields;
-
-        //add additional beforeSubmit logic here
-
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        let strFields = JSON.stringify(fields);
+        if(this.customApexClassName){
+            doBeforeSave({objectApiName: this.objectApiName, jsonFields: strFields, apexClassToCall: this.customApexClassName})
+                .then(()=>{
+                    //if no error was thrown submit form 
+                    this.template.querySelector('lightning-record-edit-form').submit(fields);
+                })
+                .catch(error =>{
+                    let myError = 'Unknown error';
+                    if (Array.isArray(error.body)) {
+                        myError = error.body.map(e => e.message).join(', ');
+                    } else if (typeof error.body.message === 'string') {
+                        myError = error.body.message;
+                    }
+                    this.showToast(this.labels.errorMessage, myError, 'error', false);
+                });   
+        }
+        else{
+            this.template.querySelector('lightning-record-edit-form').submit(fields);
+        }
     }
 
     handleSuccess(event) {

@@ -16,6 +16,10 @@
             <property name="mode" type="String" datasource="View,Edit"/>
             <property name="SaveBtnLabel" type="String" label="Save Button Label" description="Input - This is the next/submit button label"/>
             <property name="CancelBtnLabel" type="String" label="Cancel Button Label" description="Input - This is the previous/cancel button label"/>
+            <property 
+            name="customApexClassName" type="String" label="Custom Apex Class Name" 
+            description="Enter an Apex ClassName that implements the RecordDetailFSCFormInterface do run custom logic (i.e, callout) before Save button or Cancel button is clicked">
+            </property>
         </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
             <property name="recordId" type="String" required="false" label="Record Id" description="Input - This is the ID of the record to display or Output - The ID of a newly created record."/>
@@ -34,6 +38,10 @@
             <property name="suppressToast" type="Boolean" label="Show Toast on Success?" description="If True, Toast will be triggered on success"/>
             <property name="suppressUnderline" type="Boolean" label="Suppress underlines in View mode?" description="If True, underlines will not be displayed in View mode"/>
             <property name="boxclass" type="String" label="Main Div Classes" default="slds-box slds-theme_default" description="SLDS classes, Visit SLDS page for more options : https://www.lightningdesignsystem.com/components/utilities/themes"/>
+            <property 
+                    name="customApexClassName" type="String" label="Custom Apex Class Name" 
+                    description="Enter an Apex ClassName that implements the RecordDetailFSCFormInterface do run custom logic (i.e, callout) before Save button or Cancel button is clicked">
+            </property>
         </targetConfig>
                 
     </targetConfigs>
