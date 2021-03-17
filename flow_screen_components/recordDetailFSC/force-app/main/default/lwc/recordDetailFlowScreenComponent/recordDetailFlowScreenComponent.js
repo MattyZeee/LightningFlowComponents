@@ -192,7 +192,7 @@ export default class recordDetailFSC extends LightningElement {
     }
 
     handleError(event) {
-        this.showToast(this.labels.errorMessage, event.detail.message + ': ' + event.detail.detail, 'error', true);
+        this.showToast(this.labels.errorMessage, event.detail.message + ': ' + event.detail.detail, 'error', false);
     }
 
     showToast(title, message, variant, autoClose) {
