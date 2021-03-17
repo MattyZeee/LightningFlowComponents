@@ -30,7 +30,12 @@ Lightning Web Component for Flow Screens:       recordDetailFlowScreenComponent
 -->
 <template>
     <div class="container">
-
+        <!-- show lightning-messages here-->
+        <lightning-messages></lightning-messages>
+        <!-- Show Toast on top-->
+        <div class="fbc_toast-message">
+            <c-fbc_toast-message></c-fbc_toast-message>
+        </div>
         <template if:true={loadFinished}>
             <div class={boxclass}>
                 <template if:true={isError}>
@@ -69,6 +74,7 @@ Lightning Web Component for Flow Screens:       recordDetailFlowScreenComponent
                                 record-id={recordId}
                                 record-type-id={recordTypeId}
                                 object-api-name={objectApiName}
+                                onsubmit={handleSubmit}
                                 onsuccess={handleSuccess}
                                 onerror={handleError}
                         >
