@@ -3,9 +3,9 @@ public class ZipCodeCallout {
     public static String getZipCodeInfo(String zipCode, String country){
 		
         //build params to add to url
-        String params = '?codes=' + zipCode;
+        String params = '?codes=' + zipCode.deleteWhitespace();
         if(String.isNotBlank(country)){
-            params += '&country=' + country;
+            params += '&country=' + country.deleteWhitespace();
         }
         //params = EncodingUtil.urlEncode(params, 'UTF-8');
         
