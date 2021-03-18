@@ -1,3 +1,3 @@
 public interface RecordDetailFSCFormInterface{
-    void doBeforeSave(String objectApiName, String jsonFields);
+    void doBeforeSave(sObject recordData);
 }

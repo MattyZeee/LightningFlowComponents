@@ -1,9 +1,10 @@
 public class RecordDetailFSCContactValidation implements RecordDetailFSCFormInterface{
  
-    public void doBeforeSave(String objectApiName, String jsonFields){
+    public void doBeforeSave(sObject recordData){
 
-        ContactWrapper con = (ContactWrapper)JSON.deserialize(jsonFields, ContactWrapper.class);
+        //ContactWrapper con = (ContactWrapper)JSON.deserialize(jsonFields, ContactWrapper.class);
         
+        Contact con = (Contact)recordData;
         String zipCode = con.MailingPostalCode;
         String country = con.MailingCountry;
         String state = con.MailingState;
@@ -18,6 +19,7 @@ public class RecordDetailFSCContactValidation implements RecordDetailFSCFormInte
         }
     }
 
+/*
     public class ContactWrapper{
         String FirstName;
         String LastName;
@@ -25,7 +27,7 @@ public class RecordDetailFSCContactValidation implements RecordDetailFSCFormInte
         String MailingPostalCode;
         String MailingCountry;
     }
-
+*/
     public class MyException extends Exception{}
 
 }

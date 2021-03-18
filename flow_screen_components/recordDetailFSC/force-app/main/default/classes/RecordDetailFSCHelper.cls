@@ -12,10 +12,21 @@ public class RecordDetailFSCHelper {
     public static void doBeforeSave(string objectApiName, string jsonFields, String apexClassToCall){
         
         System.debug(jsonFields);
+        //create new sObject based on objectApiName
+        Schema.SObjectType sObjType = Schema.getGlobalDescribe().get(objectApiName);
+        SObject sObj = sObjType.newSObject();
+        //deserialize jsonFields into map: fieldName --> fieldValue
+        Map<String, Object> fieldMap = (Map<String, Object>)JSON.deserializeUntyped(jsonFields);
+        //set sObject field / values
+        for(String fieldName : fieldMap.keyset()){
+            sObj.put(fieldName, fieldMap.get(fieldName));
+        }
+
+        //instatiate apex class based from className
         Type t = Type.forName(apexClassToCall);   
         //Create newInstance of given class
         RecordDetailFSCFormInterface formI = (RecordDetailFSCFormInterface)t.newInstance();
         //call doBeforeSave() 
-        formI.doBeforeSave(objectApiName, jsonFields);
+        formI.doBeforeSave(sObj);
     }
 }
